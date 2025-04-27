@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/style.css" />
+
+<style>
+.container{
+  max-width: 115rem;
+}
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.information {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1.5rem;
+  /* background-color: gray; */
+  flex-wrap: wrap;
+}
+
+/* ========== Left: Image ========== */
+.imageContainer {
+  flex: 0 0 120px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ========== Middle: Product Info ========== */
+.card-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.productName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.category,
+.productPrice {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.stockElement {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.stockElement button {
+  /* padding: 0.4rem 0.9rem; */
+  font-size: 1rem;
+  background-color: #eee;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.productQuantity {
+  font-weight: 500;
+}
+
+/* ========== Right: Remove Button ========== */
+.remove-to-cart-button {
+  /* position: absolute; */
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.remove-to-cart-button:hover {
+  background-color: #c82333;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .information {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .imageContainer {
+    max-width: 100%;
+  }
+
+  .card-details {
+    width: 100%;
+  }
+
+  .remove-to-cart-button {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .stockElement {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+</style>
+
+
+
+
+  </head>
+  <body>
+    <!-- Header start here -->
+    <header class="section-navbar">
+      <section class="top_txt">
+        <div class="head container">
+          <div class="head_txt">
+            <p>Free shopping, 30-day return or refund guarantee.</p>
+          </div>
+          <div class="sing_in_up">
+            <a href="#">SIGN IN</a>
+            <a href="#">SIGN UP</a>
+          </div>
+        </div>
+      </section>
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img
+              src="./public/images/log.png"
+              alt="ecommerce logo"
+              class="logo"
+              width="80%"
+              height="auto"
+            />
+          </a>
+        </div>
+
+        <nav class="navbar">
+          <ul>
+            <li class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">about</a>
+            </li>
+            <li class="nav-item">
+              <a href="products.html" class="nav-link">products</a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">contact</a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="addToCart.html"
+                class="nav-link add-to-cart-button"
+                id="cartValue"
+                ><i class="fa-solid fa-cart-shopping"> 0 </i></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Header ends here -->
+    <section class="addToCartElement">
+      <div class="container">
+        <section>
+          <div id="productCartContainer"></div>
+        </section>
+        <section class="productCartTotalElem">
+            <div class="productCartTotalElement">
+                <p>Selected Offer Summary</p>
+           
+          <div class="productOrderTotal">
+            <div>
+              <p>Sub Total:</p>
+              <p class="productSubTotal">0</p>
+            </div>
+            <div>
+              <p>Tax:</p>
+              <p class="productTax">RS50</p>
+            </div>
+            <hr />
+            <div>
+              <p>Final Total:</p>
+              <p class="productFinalTotal">0</p>
+            </div>
+        </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+<!-- Template starts here -->
+<!-- Template never shows until not shown through main js file or until defined -->
+<template id="productCartTemplate">
+    <div class="cards" id="cardValue">
+      <article class="information [card]">
+       <div>
+
+         <span class="category"></span>
+       </div>
+
+        <div class="imageContainer">
+          <img class="productImage" src="" alt=""/>
+        </div>
+        <h2 class="productName"></h2>
+       
+          <p class="productPrice"></p>
+
+          <div class="stockElement">
+            <button class="cartIncrement">+</button>
+            <p class="productQuantity">1</p>
+            <button class="cartDecrement">-</button>
+            </div>
+          
+        
+  
+        <button class="add-to-cart-button remove-to-cart-button" >
+          Remove
+          </button>
+        
+      </article>
+    </div>
+  
+   </template>
+
+<!-- Template Ends here -->
+
+    <!-- Footer Start here -->
+    <footer class="section-footer">
+      <div class="footer-container container">
+        <div class="content-1">
+          <img src="./public/images/log.png" alt="logo" />
+          <p>
+            Welcome to Dollar EcomStore, Your ultimate destination for
+            cutting-edge gadgets!
+          </p>
+          <img src="https://i.postimg.cc/Nj9dgJ98/cards.png" alt="cards" />
+        </div>
+        <div class="content_2">
+          <h4>SHOPPING</h4>
+          <a href="#">Computer Store</a>
+          <a href="#">Computer Store</a>
+          <a href="#">Computer Store</a>
+          <a href="#">Computer Store</a>
+        </div>
+        <div class="content_3">
+          <h4>Experience</h4>
+          <a href="./contact.html">Contact Us</a>
+          <a href="" target="_blank">Payment Method</a>
+          <a href="" target="_blank">Delivery</a>
+          <a href="" target="_blank">Return and Exchange</a>
+        </div>
+        <div class="content_4">
+          <h4>NEWSLETTER</h4>
+          <p>Be the first to know about new<br />arrivals, sales & promos!</p>
+          <div class="f-mail">
+            <input type="email" placeholder="Your Email" />
+            <i class="bx bx-envelop"></i>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <div class="f-design">
+        <div class="f-design-txt">
+          <p>Design and Code By Muhammad Adnan</p>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Ends here -->
+     <script type="module" src="showAddToCartCards.js"></script>
+  </body>
+</html>
